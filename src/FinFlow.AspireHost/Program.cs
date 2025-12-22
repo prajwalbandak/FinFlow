@@ -2,12 +2,12 @@
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-// Add SQL Server container
-var sqlServer = builder.AddSqlServer("sqlserver")
-  .WithLifetime(ContainerLifetime.Persistent);
+// // Add SQL Server container
+// var sqlServer = builder.AddSqlServer("sqlserver")
+//   .WithLifetime(ContainerLifetime.Persistent);
 
-// Add the database
-var cleanArchDb = sqlServer.AddDatabase("cleanarchitecture");
+// // Add the database
+// var cleanArchDb = sqlServer.AddDatabase("cleanarchitecture");
 
 // Papercut SMTP container for email testing
 var papercut = builder.AddContainer("papercut", "jijiechen/papercut", "latest")
@@ -27,10 +27,8 @@ var papercut = builder.AddContainer("papercut", "jijiechen/papercut", "latest")
 
 // Add the web project with the database connection
 builder.AddProject<Projects.FinFlow_Web>("web")
-  .WithReference(cleanArchDb)
   .WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Environment.EnvironmentName)
   .WithEnvironment("Papercut__Smtp__Url", papercut.GetEndpoint("smtp"))
-  .WaitFor(cleanArchDb)
   .WaitFor(papercut);
 
 builder

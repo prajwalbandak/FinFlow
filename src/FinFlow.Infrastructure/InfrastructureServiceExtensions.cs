@@ -5,6 +5,7 @@ using FinFlow.Infrastructure.Data.Queries;
 using FinFlow.UseCases.Contributors.List;
 
 namespace FinFlow.Infrastructure;
+
 public static class InfrastructureServiceExtensions
 {
   public static IServiceCollection AddInfrastructureServices(
@@ -17,7 +18,7 @@ public static class InfrastructureServiceExtensions
     // 2. "DefaultConnection" - traditional SQL Server connection
     // 3. "SqliteConnection" - fallback to SQLite
     string? connectionString = config.GetConnectionString("cleanarchitecture")
-                               ?? config.GetConnectionString("DefaultConnection") 
+                               ?? config.GetConnectionString("DefaultConnection")
                                ?? config.GetConnectionString("SqliteConnection");
     Guard.Against.Null(connectionString);
 
@@ -27,18 +28,18 @@ public static class InfrastructureServiceExtensions
     services.AddDbContext<AppDbContext>((provider, options) =>
     {
       var eventDispatchInterceptor = provider.GetRequiredService<EventDispatchInterceptor>();
-      
+
       // Use SQL Server if Aspire or DefaultConnection is available, otherwise use SQLite
-      if (config.GetConnectionString("cleanarchitecture") != null || 
+      if (config.GetConnectionString("cleanarchitecture") != null ||
           config.GetConnectionString("DefaultConnection") != null)
       {
-        options.UseSqlServer(connectionString);
+        options.UseNpgsql(connectionString);
       }
       else
       {
         options.UseSqlite(connectionString);
       }
-      
+
       options.AddInterceptors(eventDispatchInterceptor);
     });
 
