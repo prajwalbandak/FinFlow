@@ -38,8 +38,8 @@ public static class MiddlewareConfig
 
     if (shouldMigrate)
     {
-      // await MigrateDatabaseAsync(app);
-      // await SeedDatabaseAsync(app);
+      await MigrateDatabaseAsync(app);
+      await SeedDatabaseAsync(app);
     }
 
     return app;
