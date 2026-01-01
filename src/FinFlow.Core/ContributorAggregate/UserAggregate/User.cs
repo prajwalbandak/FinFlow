@@ -22,4 +22,20 @@ public class User : EntityBase<User, UserId>, IAggregateRoot
         Status = status;
     }
 
+    public void Deactivate()
+    {
+        if (Status == UserStatus.Inactive)
+            return;
+
+        Status = UserStatus.Inactive;
+
+        // Optional domain event
+        // AddDomainEvent(new UserDeactivatedEvent(Id));
+    }
+
+    public void ChangeEmail(UserEmail newEmail)
+    {
+        Profile = new UserProfile(Profile.firstName, Profile.lastName, Profile.age , newEmail.value);
+    }
+
 }
