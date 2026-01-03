@@ -3,11 +3,11 @@ public partial struct UserProfile
     public string FirstName { get; set;}
     public string LastName { get; set;}
 
-    public int age { get; set;}
+    public int Age { get; set;}
     public string Email { get; set;}
 
 
-    public UserProfile(string firstName, string lastName, int age, string Email)
+    public UserProfile(string firstName, string lastName, int age, string email)
     {
         if (string.IsNullOrWhiteSpace(firstName))
             throw new ArgumentException("FirstName cannot be empty");
@@ -25,11 +25,12 @@ public partial struct UserProfile
         LastName = lastName;
         Age = age;
         Email = email;
+       
     }
      public override string ToString() => $"{FirstName} {LastName}, {Age} ({Email})";
 
 
-       public UserProfile WithEmail(UserEmail newEmail)
+       public UserProfile WithEmail(string newEmail)
     {
         return new UserProfile(FirstName, LastName, Age, newEmail);
     }

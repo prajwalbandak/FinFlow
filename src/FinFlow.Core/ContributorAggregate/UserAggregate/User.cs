@@ -1,4 +1,5 @@
 using FinFlow.Core.ContributorAggregate.Events;
+using NimblePros.SampleToDo.Core.ProjectAggregate;
 
 namespace FinFlow.Core.ContributorAggregate;
 
@@ -19,7 +20,7 @@ public class User : EntityBase<User, UserId>, IAggregateRoot
     {
         FirstName = firstName;
         Profile = profile;
-        Status = status;
+        Status = UserStatus.Active;
     }
 
     public void Deactivate()
@@ -39,3 +40,4 @@ public class User : EntityBase<User, UserId>, IAggregateRoot
     }
 
 }
+

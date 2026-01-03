@@ -1,0 +1,16 @@
+namespace FinFlow.Web.Contributors;
+
+public class Create(IMediator mediator)
+    : EndPoint<CreateUserRequest, 
+    Results<Created<CreateUserResponse>,
+    ValidatonProblem, 
+    ProblemHttpResult>>
+    {
+        private readonly Imediator _mediator = mediator;
+
+        public override void Configure(){
+                
+        }
+
+
+    }
